@@ -1,0 +1,23 @@
+<idea-plugin>
+    <id>com.xiaobaicai.tools.JsonTools</id>
+    <name>JsonTools</name>
+    <vendor url="https://blog.caijy.top/" email="XiaoBaiCai5811@163.com"/>
+
+    <description><![CDATA[
+        This is a lightweight Idea plug-in that operate json.
+        <br/>
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
