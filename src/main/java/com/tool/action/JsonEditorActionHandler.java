@@ -34,7 +34,7 @@ public class JsonEditorActionHandler extends EditorActionHandler {
                 return;
             }
             // 若为json，则转成JAVA文件
-            if (JSONUtil.isJson(text)){
+            if (JSONUtil.isJson(text)) {
                 VirtualFile file = dataContext.getData(CommonDataKeys.VIRTUAL_FILE);
                 JsonToJava toJava = new JsonToJava();
                 List<JsonClassResult> javaClasses = toJava.jsonToJava(text, getFileName(file), getPackage(file), false);
@@ -51,7 +51,7 @@ public class JsonEditorActionHandler extends EditorActionHandler {
                 }
             }
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             // json 解析失败，执行粘贴逻辑，直接在插入符号偏移量位置写入剪切板文本
             WriteCommandAction.runWriteCommandAction(ProjectManager.getInstance().getDefaultProject(), () -> {
                 editor.getDocument().insertString(editor.getCaretModel().getOffset(), text);
@@ -66,6 +66,18 @@ public class JsonEditorActionHandler extends EditorActionHandler {
 
     private String getPackage(VirtualFile vf) {
         String path = vf.getParent().getPath();
-        return path.substring(path.indexOf("src/main/java") + 14).replace('/', '.');
+        return path.substring(this.getPackageIndex(path) + 14).replace('/', '.');
+    }
+
+    private int getPackageIndex(String path) {
+        int matchIndex = path.indexOf("src/main/java");
+        if (matchIndex != -1) {
+            return matchIndex;
+        }
+        matchIndex = path.indexOf("src/test/java");
+        if (matchIndex != -1) {
+            return matchIndex;
+        }
+        return -1;
     }
 }

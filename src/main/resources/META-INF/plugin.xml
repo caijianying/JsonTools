@@ -20,4 +20,9 @@
     <actions>
         <!-- Add your actions here -->
     </actions>
+
+    <projectListeners>
+        <listener class="com.tool.listener.ProjectInitListener"
+                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
+    </projectListeners>
 </idea-plugin>
