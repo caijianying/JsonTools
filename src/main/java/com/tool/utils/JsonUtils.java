@@ -1,36 +1,30 @@
-package com.tool.action;
-
-import java.awt.datatransfer.DataFlavor;
-import java.util.List;
-import java.util.Objects;
+package com.tool.utils;
 
 import cn.hutool.json.JSONUtil;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
-import com.intellij.openapi.ide.CopyPasteManager;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import io.github.sharelison.jsontojava.JsonToJava;
 import io.github.sharelison.jsontojava.converter.JsonClassResult;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
- * @author liguang
- * @date 2022/11/3 星期四 1:58 下午
+ * @author caijy
+ * @description TODO
+ * @date 2022/11/5 星期六 10:43 下午
  */
-public class JsonEditorActionHandler extends EditorActionHandler {
+public class JsonUtils {
 
-    @Override
-    protected void doExecute(@NotNull Editor editor, @Nullable Caret caret, DataContext dataContext) {
-        String text = CopyPasteManager.getInstance().getContents(DataFlavor.stringFlavor);
+    public static void executeJsonToJava(@NotNull Editor editor, DataContext dataContext, String text) {
         try {
             // 内容为空不处理
-            if (Objects.equals(text, "")) {
+            if (StringUtils.isBlank(text)) {
                 return;
             }
             // 若为json，则转成JAVA文件
@@ -52,24 +46,22 @@ public class JsonEditorActionHandler extends EditorActionHandler {
             }
 
         } catch (Exception ex) {
-            // json 解析失败，执行粘贴逻辑，直接在插入符号偏移量位置写入剪切板文本
-            WriteCommandAction.runWriteCommandAction(ProjectManager.getInstance().getDefaultProject(), () -> {
-                editor.getDocument().insertString(editor.getCaretModel().getOffset(), text);
-            });
             return;
+        } finally {
+
         }
     }
 
-    private String getFileName(VirtualFile file) {
+    private static String getFileName(VirtualFile file) {
         return file.getName().replace("." + file.getFileType().getName().toLowerCase(), "");
     }
 
-    private String getPackage(VirtualFile vf) {
+    private static String getPackage(VirtualFile vf) {
         String path = vf.getParent().getPath();
-        return path.substring(this.getPackageIndex(path) + 14).replace('/', '.');
+        return path.substring(getPackageIndex(path) + 14).replace('/', '.');
     }
 
-    private int getPackageIndex(String path) {
+    private static int getPackageIndex(String path) {
         int matchIndex = path.indexOf("src/main/java");
         if (matchIndex != -1) {
             return matchIndex;

@@ -4,10 +4,10 @@ import com.intellij.openapi.actionSystem.IdeActions;
 import com.intellij.openapi.editor.actionSystem.EditorActionManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManagerListener;
-import com.tool.action.JsonEditorActionHandler;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * 粘贴事件设置
  * @author liguang
  * @date 2022/11/3 星期四 6:46 下午
  */

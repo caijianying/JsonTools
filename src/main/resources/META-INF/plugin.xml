@@ -18,7 +18,9 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+        <action icon="./json.svg" id="selectTextAction" class="com.tool.action.SelectTextAction" text="JsonToJava" description="parse json to java">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
     </actions>
 
     <projectListeners>
