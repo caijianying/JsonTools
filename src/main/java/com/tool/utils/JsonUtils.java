@@ -1,5 +1,7 @@
 package com.tool.utils;
 
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
@@ -27,6 +29,9 @@ public class JsonUtils {
             if (StringUtils.isBlank(text)) {
                 return;
             }
+            // 格式化json字符串
+
+            text = formatJsonStr(text);
             // 若为json，则转成JAVA文件
             if (JSONUtil.isJson(text)) {
                 VirtualFile file = dataContext.getData(CommonDataKeys.VIRTUAL_FILE);
@@ -46,6 +51,7 @@ public class JsonUtils {
             }
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             return;
         } finally {
 
@@ -71,5 +77,21 @@ public class JsonUtils {
             return matchIndex;
         }
         return -1;
+    }
+
+    private static String formatJsonStr(String text) {
+        //if (StringUtils.isNotBlank(text)) {
+        //    String formatText = JSONUtil.formatJsonStr(text);
+        //    if (JSONUtil.isJsonObj(formatText)) {
+        //        JSONObject jsonObject = JSONUtil.parseObj(formatText);
+        //        for (String key : jsonObject.keySet()) {
+        //            String str = jsonObject.getStr(key);
+        //            jsonObject.set(key, JSONUtil.formatJsonStr(str));
+        //        }
+        //        text = JSONUtil.toJsonStr(jsonObject);
+        //    }
+        //}
+        return text;
+       //return text.replace("[\"]","\"");
     }
 }
